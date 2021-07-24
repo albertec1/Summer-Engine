@@ -5,6 +5,7 @@
 #include "Dependencies/SDL/include/SDL.h"
 #pragma comment (lib, "glew32.lib")
 #pragma comment (lib, "glew32s.lib")
+#pragma comment (lib, "opengl32.lib")
 #pragma comment( lib, "SDL2.lib")
 #pragma comment( lib, "SDL2main.lib" )
 					   

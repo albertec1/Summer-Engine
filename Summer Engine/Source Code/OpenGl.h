@@ -5,8 +5,8 @@
 
 #define WIN32_MEAN_AND_LEAN
 #include <Windows.h>
-#include "Dependencies/glew/include/GL/glew.h" // extension lib
-#include "Dependencies/SDL/include/SDL_opengl.h"
+#include "glew/include/GL/glew.h" // extension lib
+#include "SDL/include/SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
