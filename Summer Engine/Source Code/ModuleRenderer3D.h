@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
-#include "MeshImporter.h"
+//#include "MeshImporter.h"
 #include <vector>
 #include <string>
 
@@ -24,14 +24,12 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
-	MeshInfo* LoadModel(const std::string& filename);
-	TextureInfo* CreateCheckerImage() const;
+	/*MeshInfo* LoadModel(const std::string& filename);
+	TextureInfo* CreateCheckerImage() const;*/
 
 	void SetDepthBufferEnabled();
 	bool GetVSync() const;
 	void SetVSync(bool vsync);
-
-	
 	
 public:
 
@@ -41,9 +39,9 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	std::vector<MeshInfo*> mesh_array;
+	//std::vector<MeshInfo*> mesh_array;
 
-	TextureInfo* CheckerTexture;
+	//TextureInfo* CheckerTexture;
 
 	bool depthEnabled = true;
 	bool wireframeMode = false;
@@ -51,10 +49,10 @@ public:
 
 private:
 
-	void LoadBuffer(MeshInfo* mesh, float* vertices, uint* indices);
+	/*void LoadBuffer(MeshInfo* mesh, float* vertices, uint* indices);
 	void LoadTexture(TextureInfo* tex);
 	void DrawMesh(MeshInfo* mesh);
-	void DrawAllMeshes();
+	void DrawAllMeshes();*/
 
  ////Testinng variables/////
 	//float *positions;

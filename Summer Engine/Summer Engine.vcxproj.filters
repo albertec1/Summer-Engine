@@ -63,6 +63,12 @@
     <ClCompile Include="Source Code\Log.cpp">
       <Filter>Source Code\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\ModuleRenderer3D.cpp">
+      <Filter>Source Code\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Light.cpp">
+      <Filter>Source Code\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -102,6 +108,12 @@
       <Filter>Source Code\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\OpenGl.h">
+      <Filter>Source Code\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\ModuleRenderer3D.h">
+      <Filter>Source Code\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Light.h">
       <Filter>Source Code\Tools</Filter>
     </ClInclude>
   </ItemGroup>

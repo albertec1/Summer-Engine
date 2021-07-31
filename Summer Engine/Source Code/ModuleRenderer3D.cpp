@@ -115,13 +115,13 @@ bool ModuleRenderer3D::Init()
 	}
 
 	// Stream log messages to Debug window
-	struct aiLogStream stream;
+	/*struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);
+	aiAttachLogStream(&stream);*/
 
 	//temporary till i figure ou where to put it
 	//LoadModel("Assets/Models/BakerHouse.fbx");
-	CreateCheckerImage();
+	//CreateCheckerImage();
 
 // Modern OpenGL square ////////////////////
 
@@ -217,7 +217,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}*/
 
 
-	DrawAllMeshes();
+	//DrawAllMeshes();
 	//ImGui Render
 	//App->menu->Render();
 	
@@ -230,7 +230,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 bool ModuleRenderer3D::CleanUp()
 {
 	// detach log stream
-	aiDetachAllLogStreams();
+	//aiDetachAllLogStreams();
 
 	LOG("Destroying 3D Renderer");
 
@@ -253,133 +253,133 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
-MeshInfo* ModuleRenderer3D::LoadModel(const std::string& filename)
-{
-	MeshImporter imp;
-	MeshInfo* temp = imp.LoadScene(filename);
-	LoadBuffer(temp, temp->vertices, temp->indices);
-	mesh_array.push_back(temp);
-	return temp;
-}
+//MeshInfo* ModuleRenderer3D::LoadModel(const std::string& filename)
+//{
+//	MeshImporter imp;
+//	MeshInfo* temp = imp.LoadScene(filename);
+//	/*LoadBuffer(temp, temp->vertices, temp->indices);
+//	mesh_array.push_back(temp);*/
+//	return temp;
+//}
 
-void ModuleRenderer3D::LoadBuffer(MeshInfo* mesh, float* vertices, uint* indices)
-{
-	//Create a vertex array object which will hold all buffer objects
-	glGenVertexArrays(1, &mesh->VAO);
-	glBindVertexArray(mesh->VAO);
+//void ModuleRenderer3D::LoadBuffer(MeshInfo* mesh, float* vertices, uint* indices)
+//{
+//	//Create a vertex array object which will hold all buffer objects
+//	glGenVertexArrays(1, &mesh->VAO);
+//	glBindVertexArray(mesh->VAO);
+//
+//	glGenBuffers(1, (GLuint*)&mesh->b_vertices);
+//	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertices * 3, vertices, GL_STATIC_DRAW);
+//	
+//	glGenBuffers(1, (GLuint*)&mesh->b_indices);
+//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->b_indices);
+//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->num_indices, indices, GL_STATIC_DRAW);
+//
+//	glVertexAttribPointer((uint)BufferIndex::VERTICES, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+//	glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
+//
+//	if (mesh->num_normals > 0)
+//	{
+//		glGenBuffers(1, (GLuint*)&mesh->b_normals);
+//		glBindBuffer(GL_ARRAY_BUFFER, mesh->b_normals);
+//		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normals * 3, mesh->normals, GL_STATIC_DRAW);
+//	
+//		glVertexAttribPointer((uint)BufferIndex::NORMALS, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+//		glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
+//	}
+//
+//	if (mesh->num_tex_coords > 0) // tex_coords ///////////
+//	{
+//		glGenBuffers(1, (GLuint*)&mesh->b_texture_coords);
+//		glBindBuffer(GL_ARRAY_BUFFER, mesh->b_texture_coords);
+//		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_tex_coords * 2, mesh->texture_coords, GL_STATIC_DRAW);
+//	
+//		glVertexAttribPointer((uint)BufferIndex::TEX_COORDINATES, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+//		glEnableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
+//	}
+//	
+//	glBindVertexArray(0);
+//
+///*	glGenBuffers(1, (GLuint*)&mesh->b_vertices);
+//	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size() * 8, &vertices, GL_STATIC_DRAW);
+//	
+//	glEnableVertexAttribArray(1);
+//	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (const GLvoid*)12);
+//	
+//	glEnableVertexAttribArray(2);
+//	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float), (const GLvoid*)20);
+//*/
+//	
+//}
 
-	glGenBuffers(1, (GLuint*)&mesh->b_vertices);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertices * 3, vertices, GL_STATIC_DRAW);
-	
-	glGenBuffers(1, (GLuint*)&mesh->b_indices);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->b_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->num_indices, indices, GL_STATIC_DRAW);
+//void ModuleRenderer3D::DrawMesh(MeshInfo* mesh)
+//{	
+//	glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
+//	glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
+//	glEnableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
+//
+//	glBindVertexArray(mesh->VAO);	
+//	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
+//	GLenum error = glGetError();
+//	if (error != GL_NO_ERROR)
+//	{
+//		LOG("Error Drawimg Elements! %s\n", gluErrorString(error));
+//	}
+//	glBindVertexArray(0);
+//
+//	glDisableVertexAttribArray((uint)BufferIndex::VERTICES);
+//	glDisableVertexAttribArray((uint)BufferIndex::NORMALS);
+//	glDisableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
+//
+//}
+//
+//void ModuleRenderer3D::DrawAllMeshes()
+//{	
+//	for (int m = 0; m < mesh_array.size(); m++)
+//	{
+//		DrawMesh(mesh_array[m]);
+//	}
+//}
+//           
+//void ModuleRenderer3D::LoadTexture(TextureInfo* tex)
+//{
+//	
+//}
 
-	glVertexAttribPointer((uint)BufferIndex::VERTICES, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
-
-	if (mesh->num_normals > 0)
-	{
-		glGenBuffers(1, (GLuint*)&mesh->b_normals);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->b_normals);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normals * 3, mesh->normals, GL_STATIC_DRAW);
-	
-		glVertexAttribPointer((uint)BufferIndex::NORMALS, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
-	}
-
-	if (mesh->num_tex_coords > 0) // tex_coords ///////////
-	{
-		glGenBuffers(1, (GLuint*)&mesh->b_texture_coords);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->b_texture_coords);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_tex_coords * 2, mesh->texture_coords, GL_STATIC_DRAW);
-	
-		glVertexAttribPointer((uint)BufferIndex::TEX_COORDINATES, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
-	}
-	
-	glBindVertexArray(0);
-
-/*	glGenBuffers(1, (GLuint*)&mesh->b_vertices);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size() * 8, &vertices, GL_STATIC_DRAW);
-	
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (const GLvoid*)12);
-	
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float), (const GLvoid*)20);
-*/
-	
-}
-
-void ModuleRenderer3D::DrawMesh(MeshInfo* mesh)
-{	
-	glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
-	glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
-	glEnableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
-
-	glBindVertexArray(mesh->VAO);	
-	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
-	GLenum error = glGetError();
-	if (error != GL_NO_ERROR)
-	{
-		LOG("Error Drawimg Elements! %s\n", gluErrorString(error));
-	}
-	glBindVertexArray(0);
-
-	glDisableVertexAttribArray((uint)BufferIndex::VERTICES);
-	glDisableVertexAttribArray((uint)BufferIndex::NORMALS);
-	glDisableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
-
-}
-
-void ModuleRenderer3D::DrawAllMeshes()
-{	
-	for (int m = 0; m < mesh_array.size(); m++)
-	{
-		DrawMesh(mesh_array[m]);
-	}
-}
-           
-void ModuleRenderer3D::LoadTexture(TextureInfo* tex)
-{
-	
-}
-
-TextureInfo* ModuleRenderer3D::CreateCheckerImage() const
-{
-	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
-	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
-		for (int j = 0; j < CHECKERS_WIDTH; j++) {
-			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
-			checkerImage[i][j][0] = (GLubyte)c;
-			checkerImage[i][j][1] = (GLubyte)c;
-			checkerImage[i][j][2] = (GLubyte)c;
-			checkerImage[i][j][3] = (GLubyte)255;
-		}
-	}
-
-	TextureInfo* tex = new TextureInfo;
-	tex->path = "Checker";
-	tex->tex_width = CHECKERS_WIDTH;
-	tex->tex_height = CHECKERS_HEIGHT;
-
-	//Load Texture info and parameters
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &tex->tex_ID);
-	glBindTexture(GL_TEXTURE_2D, tex->tex_ID);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	//Send checkerImage to OpenGL
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->tex_width, tex->tex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
-	return tex;
-}
+//TextureInfo* ModuleRenderer3D::CreateCheckerImage() const
+//{
+//	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
+//	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+//		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+//			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+//			checkerImage[i][j][0] = (GLubyte)c;
+//			checkerImage[i][j][1] = (GLubyte)c;
+//			checkerImage[i][j][2] = (GLubyte)c;
+//			checkerImage[i][j][3] = (GLubyte)255;
+//		}
+//	}
+//
+//	TextureInfo* tex = new TextureInfo;
+//	tex->path = "Checker";
+//	tex->tex_width = CHECKERS_WIDTH;
+//	tex->tex_height = CHECKERS_HEIGHT;
+//
+//	//Load Texture info and parameters
+//	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+//	glGenTextures(1, &tex->tex_ID);
+//	glBindTexture(GL_TEXTURE_2D, tex->tex_ID);
+//
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//
+//	//Send checkerImage to OpenGL
+//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->tex_width, tex->tex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+//	return tex;
+//}
 
 
 void ModuleRenderer3D::SetDepthBufferEnabled()
