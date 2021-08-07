@@ -12,20 +12,20 @@ class ModuleWindow;
 class ModuleInput;
 //class ModuleAudio;
 class ModuleSceneIntro;
-//class ModuleRenderer3D;
+class ModuleRenderer3D;
 class ModuleCamera3D;
 class ModulePhysics3D;
-//class ModuleMenu;
+class ModuleMenu;
 //class ModuleImporter;
 
 class Application
 {
 public:
 	ModuleWindow* window;
-	//ModuleMenu* menu;
+	ModuleMenu* menu;
 	ModuleInput* input;
 	ModuleSceneIntro* scene_intro;
-	//ModuleRenderer3D* renderer3D;
+	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModulePhysics3D* physics;
 	//MeshImporter* imp;

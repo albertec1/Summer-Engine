@@ -1,18 +1,24 @@
 #include "Application.h"
 #include "ModuleMenu.h"
-
-#include "ImGui.h"	
+#include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
 #include "ModuleInput.h"
 
-#include "Window.h"
-#include "Win_Inspector.h"
-#include "Win_Configuration.h"
-#include "Win_Hierarchy.h"
-#include "Win_Console.h"
+#include "Dependencies/ImGui/imgui.h"
+#include "Dependencies/ImGui/imgui_internal.h"
+#include "Dependencies/ImGui/imgui_impl_sdl.h"
+#include "Dependencies/ImGui/imgui_impl_opengl3.h"
+
+//
+//#include "Window.h"
+//#include "Win_Inspector.h"
+//#include "Win_Configuration.h"
+//#include "Win_Hierarchy.h"
+//#include "Win_Console.h"
 
 ModuleMenu::ModuleMenu(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	inspector = new Win_Inspector(true);
+	/*inspector = new Win_Inspector(true);
 	hierarchy = new Win_Hierarchy(true);
 	configuration = new Win_Configuration((int)App->GetFRLimit(), false);
 	console = new Win_Console(true);
@@ -20,7 +26,7 @@ ModuleMenu::ModuleMenu(Application* app, bool start_enabled) : Module(app, start
 	AddWindow(console);
 	AddWindow(inspector);
 	AddWindow(configuration);
-	AddWindow(hierarchy);
+	AddWindow(hierarchy);*/
 }
 
 ModuleMenu::~ModuleMenu()
@@ -61,9 +67,9 @@ bool ModuleMenu::Start()
 
 bool ModuleMenu::CleanUp()
 {
-	std::vector<Window*>::iterator item = winArray.begin();
+	/*std::vector<Window*>::iterator item = winArray.begin();
 	for (item; item != winArray.end(); ++item)
-		(*item)->CleanUp();
+		(*item)->CleanUp();*/
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
@@ -89,10 +95,10 @@ update_status ModuleMenu::Update(float dt)
 	using_mouse = io.WantCaptureMouse;
 
 
-	if (configuration->changeFPSlimit)
-	{
-		App->SetFRLimit(configuration->max_fps);
-	}
+	//if (configuration->changeFPSlimit)
+	//{
+	//	App->SetFRLimit(configuration->max_fps);
+	//}
 
 	//Top bar menu, with an option to close the editor
 	if (ImGui::BeginMainMenuBar())
@@ -129,7 +135,7 @@ update_status ModuleMenu::Update(float dt)
 		}
 		if (ImGui::BeginMenu("Windows"))
 		{
-			if (ImGui::MenuItem("Inspector", " ", inspector->active))
+			/*if (ImGui::MenuItem("Inspector", " ", inspector->active))
 			{ 
 				inspector->SetActive();
 			}
@@ -145,6 +151,7 @@ update_status ModuleMenu::Update(float dt)
 			{
 				console->SetActive();
 			}
+			*/
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
@@ -170,38 +177,33 @@ update_status ModuleMenu::Update(float dt)
 	}
 
 	//Window with a checkbox allowing to show the demo window of ImGui
-	//if (show_demo_window)
-	//	ImGui::ShowDemoWindow(&show_demo_window);
-	//{
-	//	ImGui::Begin("DEMO");
-	//	ImGui::Checkbox("Demo Window", &show_demo_window);
-	//}
-
-	std::vector<Window*>::iterator item = winArray.begin();
-
-	for (item; item != winArray.end(); ++item)
+	if (show_demo_window)
+		ImGui::ShowDemoWindow(&show_demo_window);
 	{
-		(*item)->Draw();
+		ImGui::Begin("DEMO");
+		ImGui::Checkbox("Demo Window", &show_demo_window);
+		ImGui::End();
 	}
-	
-		
 
+	//std::vector<Window*>::iterator item = winArray.begin();
+
+	//for (item; item != winArray.end(); ++item)
+	//{
+	//	(*item)->Draw();
+	//}
+	//
+		
 	return UPDATE_CONTINUE;
 }
 
 
-void ModuleMenu::AddWindow(Window* window)
-{
-	winArray.push_back(window);
-}
+//void ModuleMenu::AddWindow(Window* window)
+//{
+//	winArray.push_back(window);
+//}
 
 void ModuleMenu::Render()
 {
-	//ImGui::End();
-
-	
-
-
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -218,12 +220,12 @@ void ModuleMenu::Render()
 
 void ModuleMenu::LogFPS(float fps, float ms)
 {
-	if (configuration != nullptr)
-		configuration->AddLogFPS(fps, ms);
+	/*if (configuration != nullptr)
+		configuration->AddLogFPS(fps, ms);*/
 }
 
 void ModuleMenu::Log(const char* text)
 {
-	if (console != nullptr)
-		console->ConsoleLog(text);
+	/*if (console != nullptr)
+		console->ConsoleLog(text);*/
 }

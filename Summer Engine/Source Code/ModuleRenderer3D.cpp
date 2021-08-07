@@ -2,6 +2,8 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleWindow.h"
+#include "ModuleMenu.h"
+
 #include "MeshImporter.h"
 #include "TextureImporter.h"
 
@@ -219,7 +221,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	//DrawAllMeshes();
 	//ImGui Render
-	//App->menu->Render();
+	App->menu->Render();
 	
 	SDL_GL_SwapWindow(App->window->window);
 

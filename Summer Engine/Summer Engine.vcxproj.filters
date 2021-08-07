@@ -25,6 +25,12 @@
     <Filter Include="Source Code\Helpers">
       <UniqueIdentifier>{93bc5476-cafb-4b22-912d-d980e4ccb06c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Containers\OpenGL">
+      <UniqueIdentifier>{ec76428b-c365-43bf-83d2-1fc032c33db9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers\ImGui">
+      <UniqueIdentifier>{d3b0aca0-08ff-47d8-b265-a071d9c20036}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -69,6 +75,27 @@
     <ClCompile Include="Source Code\Light.cpp">
       <Filter>Source Code\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\ModuleMenu.cpp">
+      <Filter>Source Code\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui.cpp">
+      <Filter>Containers\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>Containers\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui_impl_sdl.cpp">
+      <Filter>Containers\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui_demo.cpp">
+      <Filter>Containers\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui_draw.cpp">
+      <Filter>Containers\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui_widgets.cpp">
+      <Filter>Containers\ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -107,14 +134,44 @@
     <ClInclude Include="Source Code\glmath.h">
       <Filter>Source Code\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\OpenGl.h">
-      <Filter>Source Code\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\ModuleRenderer3D.h">
       <Filter>Source Code\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\Light.h">
       <Filter>Source Code\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\ModuleMenu.h">
+      <Filter>Source Code\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\OpenGl.h">
+      <Filter>Containers\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\ImGui.h">
+      <Filter>Source Code\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imgui.h">
+      <Filter>Containers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imgui_impl_opengl3.h">
+      <Filter>Containers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imgui_impl_sdl.h">
+      <Filter>Containers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imgui_internal.h">
+      <Filter>Containers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imconfig.h">
+      <Filter>Containers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imstb_rectpack.h">
+      <Filter>Containers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imstb_textedit.h">
+      <Filter>Containers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imstb_truetype.h">
+      <Filter>Containers\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,10 +5,10 @@
 #include "ModuleInput.h"
 //#include "ModuleAudio.h"
 #include "ModuleSceneIntro.h"
-//#include "ModuleRenderer3D.h"
+#include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
-//#include "ModuleMenu.h" 
+#include "ModuleMenu.h" 
 //#include "MeshImporter.h"
 
 Application::Application()
@@ -17,10 +17,10 @@ Application::Application()
 	input = new ModuleInput(this);
 	//audio = new ModuleAudio(this, true);
 	scene_intro = new ModuleSceneIntro(this);
-	//renderer3D = new ModuleRenderer3D(this);
+	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	physics = new ModulePhysics3D(this);
-	//menu = new ModuleMenu(this);
+	menu = new ModuleMenu(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -28,7 +28,7 @@ Application::Application()
 
 	// Main Modules
 	AddModule(window);
-	//AddModule(menu);
+	AddModule(menu);
 	AddModule(camera);
 	AddModule(input);
 
@@ -39,7 +39,7 @@ Application::Application()
 	AddModule(scene_intro);
 
 	// Renderer last!
-	//AddModule(renderer3D);
+	AddModule(renderer3D);
 
 	title_name = TITLE;
 	contFPS = 0;
