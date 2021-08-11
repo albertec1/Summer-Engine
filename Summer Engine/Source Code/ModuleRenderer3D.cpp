@@ -186,14 +186,13 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLineWidth(2.0f);
 	glBegin(GL_TRIANGLES);
 	
-	glTexCoord2f(0.0f, 0.f);
-	glVertex3f(-5.f, 1.f, 0.f);
+	glTexCoord2f(0.0f, 0.f);	glVertex3f(-2.f, 1.f, 0.f);
+	glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
+	glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
 
-	glTexCoord2f(1.f, 0.f);
-	glVertex3f(5.f, 1.f, 0.f);
-	
-	glTexCoord2f(0.5f, 1.f);
-	glVertex3f(0.f, 6.f, 0.f);
+	glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
+	glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
+	glTexCoord2f(1.f, 1.f);		glVertex3f(2.f, 4.f, 0.f);
 	
 	glEnd();
 	glFlush();
