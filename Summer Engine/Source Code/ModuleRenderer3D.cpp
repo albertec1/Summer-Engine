@@ -117,9 +117,9 @@ bool ModuleRenderer3D::Init()
 	}
 
 	// Stream log messages to Debug window
-	/*struct aiLogStream stream;
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);*/
+	//struct aiLogStream stream;
+	//stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
+	//aiAttachLogStream(&stream);
 
 	//temporary till i figure ou where to put it
 	//LoadModel("Assets/Models/BakerHouse.fbx");
@@ -163,8 +163,6 @@ bool ModuleRenderer3D::Init()
 // PreUpdate: clear buffer
 update_status ModuleRenderer3D::PreUpdate(float dt)
 {
-	//recalculate projection matrix and set up the viewport if the window resizes?
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	

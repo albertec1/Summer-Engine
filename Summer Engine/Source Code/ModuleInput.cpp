@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
-//#include "ModuleRenderer3D.h"
+#include "ModuleRenderer3D.h"
 
 #include "Dependencies/SDL/include/SDL_mouse.h"
 
@@ -108,11 +108,11 @@ update_status ModuleInput::PreUpdate(float dt)
 			quit = true;
 			break;
 
-			/*case SDL_WINDOWEVENT:
+			case SDL_WINDOWEVENT:
 			{
-				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
+				if (e.window.event == SDL_WINDOWEVENT_RESIZED)
 					App->renderer3D->OnResize(e.window.data1, e.window.data2);
-			}*/
+			}
 		}
 	}
 
