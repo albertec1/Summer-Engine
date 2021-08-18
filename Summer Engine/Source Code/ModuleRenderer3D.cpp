@@ -121,39 +121,62 @@ bool ModuleRenderer3D::Init()
 	//stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	//aiAttachLogStream(&stream);
 
-	//temporary till i figure ou where to put it
+	//temporary till i figure ou where to put it	
 	//LoadModel("Assets/Models/BakerHouse.fbx");
 	//CreateCheckerImage();
-
-// Modern OpenGL square ////////////////////
-
-	//float positions[] = {
+	
+	// Modern OpenGL square render////////////////////
+	//
+	//float vertices[] = {
 	//	-0.5f, -0.5f,
 	//	 0.5f, -0.5f,
 	//	 0.5f,  0.5f,
-	//	//0.5f,  0.5f, 3RD VERTEX REPEATED
+	//	 0.5f,  0.5f, //3RD VERTEX REPEATED
 	//	-0.5f,  0.5f,
-	//	//-0.5f, -0.5f 4TH VERTEX REPEATED
+	//	-0.5f, -0.5f //4TH VERTEX REPEATED
 	//};
-
-	//uint indices[] = {
-	//	0, 1, 2,
-	//	2, 3, 0
-	//};
-
-	//uint buffer;
-	//glGenBuffers(1, &buffer);
-	//glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 2, positions, GL_STATIC_DRAW);
-
-	//glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 	//
+	////uint indices[] = {
+	////	0, 1, 2,
+	////	2, 3, 0
+	////};
+	//
+	//// VBO to store vertex positions
+	//glGenBuffers(1, &VBO);
+	//glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 2, vertices, GL_STATIC_DRAW);
+	//
+	//glEnableClientState(GL_VERTEX_ARRAY);
+	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//glDisableClientState(GL_VERTEX_ARRAY);
+	
+	// Modern OpenGL square  ////////////////////
+
+	float positions[] = {
+		-0.5f, -0.5f,
+		 0.5f, -0.5f,
+		 0.5f,  0.5f,
+		0.5f,  0.5f, //3RD VERTEX REPEATED
+		-0.5f,  0.5f,
+		-0.5f, -0.5f //4TH VERTEX REPEATED
+	};
+
+	uint indices[] = {
+		0, 1, 2,
+		2, 3, 0
+	};
+
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 2, positions, GL_STATIC_DRAW);
+
+	/*glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);*/
+
 	//uint ibo; //index buffer object
 	//glGenBuffers(1, &ibo);
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 6, indices, GL_STATIC_DRAW);
-
 
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -180,21 +203,21 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
-	//DIRECT MODE TRIANGLE EXAMPLE//
-	glLineWidth(2.0f);
-	glBegin(GL_TRIANGLES);
-	
-	glTexCoord2f(0.0f, 0.f);	glVertex3f(-2.f, 1.f, 0.f);
-	glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
-	glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
+	////DIRECT MODE TRIANGLE EXAMPLE//
+	//glLineWidth(2.0f);
+	//glBegin(GL_TRIANGLES);
+	//
+	//glTexCoord2f(0.0f, 0.f);	glVertex3f(-2.f, 1.f, 0.f);
+	//glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
+	//glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
 
-	glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
-	glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
-	glTexCoord2f(1.f, 1.f);		glVertex3f(2.f, 4.f, 0.f);
+	//glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
+	//glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
+	//glTexCoord2f(1.f, 1.f);		glVertex3f(2.f, 4.f, 0.f);
+	//
+	//glEnd();
+	//glFlush();
 	
-	glEnd();
-	glFlush();
-
 	return UPDATE_CONTINUE;
 }
 
@@ -206,17 +229,27 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
 	SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	
-	//glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-
-	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-	/*GLenum error = glGetError();
+	//Render without indices///
+	glEnableClientState(GL_VERTEX_ARRAY);		
+	glVertexPointer(2, GL_FLOAT, 0, NULL);		//Cl
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR)
+	{
+		LOG("Error Drawimg Elements! %s\n", gluErrorString(error));
+	}
+	glDisableClientState(GL_VERTEX_ARRAY);
+	// Modern OpenGL square render////////////////////
+	//Render using indices///
+	/*glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
 	{
 		LOG("Error Drawimg Elements! %s\n", gluErrorString(error));
 	}*/
 
-
 	//DrawAllMeshes();
+	
 	//ImGui Render
 	App->menu->Render();
 	

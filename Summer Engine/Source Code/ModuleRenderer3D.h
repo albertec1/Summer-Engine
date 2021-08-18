@@ -54,6 +54,9 @@ private:
 	void DrawMesh(MeshInfo* mesh);
 	void DrawAllMeshes();*/
 
+	uint VBO = 0;
+	uint IBO = 0;
+
  ////Testinng variables/////
 	//float *positions;
 	//unsigned int buffer;
