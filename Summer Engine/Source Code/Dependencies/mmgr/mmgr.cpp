@@ -178,11 +178,11 @@ static	const	unsigned int	paddingSize            = 4;
 // ---------------------------------------------------------------------------------------------------------------------------------
 
 #ifdef	WIN32
-	#ifdef	_DEBUG
-	#define	m_assert(x) if ((x) == false) __asm { int 3 }
-	#else
+	/*#ifdef	_DEBUG
+	#define	m_assert(x) if ((x) == false) __asm { int 3 } ?????
+	#else*/
 	#define	m_assert(x) {}
-	#endif
+	//#endif
 #elif defined(__BEOS__)
 	#ifdef DEBUG
 		extern void debugger(const char *message);

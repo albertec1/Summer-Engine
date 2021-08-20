@@ -1,30 +1,34 @@
+#include "WinConfiguration.h"
 
-#include "Win_Configuration.h"
-#include "OpenGl.h"
-#include "ImGui.h"
+#include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "ModuleRenderer3D.h"
+#include "ModuleInput.h"
 #include "Color.h"
-#include "Globals.h"
+
+#include "OpenGl.h"
+#include "ImGui.h"
+
 #include "Dependencies/mmgr/mmgr.h"
 #include <vector>
 
 using namespace std;
 
 // ---------------------------------------------------------
-Win_Configuration::Win_Configuration(int _max_fps, bool _active) : Window(_active),
+WinConfiguration::WinConfiguration(int _max_fps, bool _active) : Window(_active),
 fps_log(LOG_LENGTH), ms_log(LOG_LENGTH)
 {}
 
-Win_Configuration::~Win_Configuration()
+WinConfiguration::~WinConfiguration()
 {}
 
-void Win_Configuration::CleanUp()
+void WinConfiguration::CleanUp()
 {
 }
 
 
-void Win_Configuration::AddLogFPS(float fps, float ms)
+void WinConfiguration::AddLogFPS(float fps, float ms)
 {
 	static uint count = 0;
 
@@ -43,7 +47,7 @@ void Win_Configuration::AddLogFPS(float fps, float ms)
 	ms_log[count - 1] = ms;
 }
 
-void Win_Configuration::Draw()
+void WinConfiguration::Draw()
 {
 	if (!active)
 		return;
@@ -65,7 +69,6 @@ void Win_Configuration::Draw()
 				changeFPSlimit = true;
 			}
 
-
 			ImGui::Text("Limit Framerate:");
 			ImGui::SameLine();
 			ImGui::TextColored(YELLOW, "%i", max_fps);
@@ -75,8 +78,6 @@ void Win_Configuration::Draw()
 			ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 			sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
 			ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
-
-
 
 			sMStats stats = m_getMemoryStatistics();
 			static int speed = 0;
@@ -106,8 +107,6 @@ void Win_Configuration::Draw()
 			ImGui::Text("Accumulated Alloc Unit Count: %u", stats.accumulatedAllocUnitCount);
 			ImGui::Text("Total Alloc Unit Count: %u", stats.totalAllocUnitCount);
 			ImGui::Text("Peak Alloc Unit Count: %u", stats.peakAllocUnitCount);
-
-
 
 		}
 		if (ImGui::CollapsingHeader("Render"))

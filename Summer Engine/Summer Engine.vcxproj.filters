@@ -31,6 +31,12 @@
     <Filter Include="Containers\ImGui">
       <UniqueIdentifier>{d3b0aca0-08ff-47d8-b265-a071d9c20036}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Code\Windows">
+      <UniqueIdentifier>{0a6be4ce-af79-466c-935b-9b7a99f6dafa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Containers\mmgr">
+      <UniqueIdentifier>{a54a2e6b-6619-4e7e-8ed1-2f0108f687f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -95,6 +101,18 @@
     </ClCompile>
     <ClCompile Include="Source Code\Dependencies\ImGui\imgui_widgets.cpp">
       <Filter>Containers\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WinConsole.cpp">
+      <Filter>Source Code\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Window.cpp">
+      <Filter>Source Code\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\WinConfigutation.cpp">
+      <Filter>Source Code\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\mmgr\mmgr.cpp">
+      <Filter>Containers\mmgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +190,21 @@
     </ClInclude>
     <ClInclude Include="Source Code\Dependencies\ImGui\imstb_truetype.h">
       <Filter>Containers\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\WinConsole.h">
+      <Filter>Source Code\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Window.h">
+      <Filter>Source Code\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\WinConfiguration.h">
+      <Filter>Source Code\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\mmgr\mmgr.h">
+      <Filter>Containers\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\mmgr\nommgr.h">
+      <Filter>Containers\mmgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

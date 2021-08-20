@@ -6,7 +6,7 @@
 
 #define LOG_LENGTH 50
 
-class Win_Configuration : public Window
+class WinConfiguration : public Window
 {
 public:
 	const uint default_w = 325;
@@ -15,8 +15,8 @@ public:
 	const uint default_y = 609;
 public:
 
-	Win_Configuration(int _max_fps, bool _active);
-	virtual ~Win_Configuration();
+	WinConfiguration(int _max_fps, bool _active);
+	virtual ~WinConfiguration();
 
 	void Draw() override;
 	void CleanUp() override;

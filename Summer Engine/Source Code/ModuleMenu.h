@@ -5,11 +5,11 @@
 #include "Globals.h"
 #include <vector>
 
-//class Window;
-//class Win_Inspector;
-//class Win_Configuration;
-//class Win_Hierarchy;
-//class Win_Console;
+class Window;
+class WinConsole;
+class WinConfiguration;
+//class WinInspector;
+//class WinHierarchy;
 
 class ModuleMenu : public Module
 {
@@ -21,22 +21,23 @@ public:
 	update_status Update(float dt) override;
 	bool CleanUp() override;
 
-	//void AddWindow(Window* window);
+	void AddWindow(Window* window);
 	void LogFPS(float fps, float ms);
 	void Log(const char* text);
-	inline bool UsingKeyboard() const { return using_keyboard; }
+	inline bool UsingKeyboard() const { return usingKeyboard; }
 
 	void Render();
 public:
-	bool show_demo_window;
-	bool using_keyboard;
-	bool using_mouse;
+	bool showDemoWindow;
+	bool usingKeyboard;
+	bool usingMouse;
 
-	//std::vector<Window*> winArray;
-	//Win_Inspector* inspector = nullptr;
-	//Win_Configuration* configuration = nullptr;
-	//Win_Hierarchy* hierarchy = nullptr;
-	//Win_Console* console = nullptr;
+	std::vector<Window*> winArray;
+	WinConsole* console = nullptr;
+	WinConfiguration* configuration = nullptr;
+
+	//WinInspector* inspector = nullptr;
+	//WinHierarchy* hierarchy = nullptr;
 	//
 };
 

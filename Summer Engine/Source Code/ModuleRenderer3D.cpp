@@ -156,9 +156,9 @@ bool ModuleRenderer3D::Init()
 		-0.5f, -0.5f,
 		 0.5f, -0.5f,
 		 0.5f,  0.5f,
-		0.5f,  0.5f, //3RD VERTEX REPEATED
+		 //0.5f,  0.5f, //3RD VERTEX REPEATED
 		-0.5f,  0.5f,
-		-0.5f, -0.5f //4TH VERTEX REPEATED
+		//-0.5f, -0.5f //4TH VERTEX REPEATED
 	};
 
 	uint indices[] = {
@@ -170,13 +170,13 @@ bool ModuleRenderer3D::Init()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 2, positions, GL_STATIC_DRAW);
 
-	/*glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);*/
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
-	//uint ibo; //index buffer object
-	//glGenBuffers(1, &ibo);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 6, indices, GL_STATIC_DRAW);
+	uint ibo; //index buffer object
+	glGenBuffers(1, &ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 6, indices, GL_STATIC_DRAW);
 
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -207,7 +207,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	//glLineWidth(2.0f);
 	//glBegin(GL_TRIANGLES);
 	//
-	//glTexCoord2f(0.0f, 0.f);	glVertex3f(-2.f, 1.f, 0.f);
+	//glTexCoord2f(0.0f, 0.f);		glVertex3f(-2.f, 1.f, 0.f);
 	//glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
 	//glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
 
@@ -230,23 +230,24 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	
 	//Render without indices///
-	glEnableClientState(GL_VERTEX_ARRAY);		
-	glVertexPointer(2, GL_FLOAT, 0, NULL);		//Cl
+	/*glEnableClientState(GL_VERTEX_ARRAY);		
+	glVertexPointer(2, GL_FLOAT, 0, NULL);	
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
 	{
 		LOG("Error Drawimg Elements! %s\n", gluErrorString(error));
 	}
-	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);*/
+
 	// Modern OpenGL square render////////////////////
-	//Render using indices///
-	/*glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	// Render using indices///
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
 	{
 		LOG("Error Drawimg Elements! %s\n", gluErrorString(error));
-	}*/
+	}
 
 	//DrawAllMeshes();
 	

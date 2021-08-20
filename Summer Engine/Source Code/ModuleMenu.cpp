@@ -4,28 +4,27 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleInput.h"
 
+#include "Window.h"
+#include "WinConsole.h"
+#include "WinConfiguration.h"
+//#include "Win_Inspector.h"
+//#include "Win_Hierarchy.h"
+
 #include "Dependencies/ImGui/imgui.h"
 #include "Dependencies/ImGui/imgui_internal.h"
 #include "Dependencies/ImGui/imgui_impl_sdl.h"
 #include "Dependencies/ImGui/imgui_impl_opengl3.h"
 
-//
-//#include "Window.h"
-//#include "Win_Inspector.h"
-//#include "Win_Configuration.h"
-//#include "Win_Hierarchy.h"
-//#include "Win_Console.h"
-
 ModuleMenu::ModuleMenu(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	console = new WinConsole(true);
+	configuration = new WinConfiguration((int)App->GetFRLimit(), false);
 	/*inspector = new Win_Inspector(true);
-	hierarchy = new Win_Hierarchy(true);
-	configuration = new Win_Configuration((int)App->GetFRLimit(), false);
-	console = new Win_Console(true);
+	hierarchy = new Win_Hierarchy(true);*/
 
 	AddWindow(console);
-	AddWindow(inspector);
 	AddWindow(configuration);
+	/*AddWindow(inspector);
 	AddWindow(hierarchy);*/
 }
 
@@ -56,7 +55,7 @@ bool ModuleMenu::Start()
 	}
 
 	// Our state
-	show_demo_window = false;
+	showDemoWindow = false;
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->gl_context);
@@ -67,9 +66,9 @@ bool ModuleMenu::Start()
 
 bool ModuleMenu::CleanUp()
 {
-	/*std::vector<Window*>::iterator item = winArray.begin();
+	std::vector<Window*>::iterator item = winArray.begin();
 	for (item; item != winArray.end(); ++item)
-		(*item)->CleanUp();*/
+		(*item)->CleanUp();
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
@@ -91,14 +90,13 @@ update_status ModuleMenu::Update(float dt)
 	ImGui::NewFrame();
 
 	ImGuiIO& io = ImGui::GetIO();
-	using_keyboard = io.WantCaptureKeyboard;
-	using_mouse = io.WantCaptureMouse;
+	usingKeyboard = io.WantCaptureKeyboard;
+	usingMouse = io.WantCaptureMouse;
 
-
-	//if (configuration->changeFPSlimit)
-	//{
-	//	App->SetFRLimit(configuration->max_fps);
-	//}
+	if (configuration->changeFPSlimit)
+	{
+		App->SetFRLimit(configuration->max_fps);
+	}
 
 	//Top bar menu, with an option to close the editor
 	if (ImGui::BeginMainMenuBar())
@@ -135,21 +133,21 @@ update_status ModuleMenu::Update(float dt)
 		}
 		if (ImGui::BeginMenu("Windows"))
 		{
-			/*if (ImGui::MenuItem("Inspector", " ", inspector->active))
-			{ 
-				inspector->SetActive();
+			if (ImGui::MenuItem("Console", " ", console->active))
+			{
+				console->SetActive();
 			}
 			if (ImGui::MenuItem("Configuration", " ", configuration->active))
 			{
 				configuration->SetActive();
 			}
+			/*if (ImGui::MenuItem("Inspector", " ", inspector->active))
+			{ 
+				inspector->SetActive();
+			}
 			if (ImGui::MenuItem("Hierarchy", " ", hierarchy->active))
 			{
 				hierarchy->SetActive();
-			}
-			if (ImGui::MenuItem("Console", " ", console->active))
-			{
-				console->SetActive();
 			}
 			*/
 			ImGui::EndMenu();
@@ -163,13 +161,13 @@ update_status ModuleMenu::Update(float dt)
 		if (ImGui::BeginMenu("About"))
 		{
 			if (ImGui::MenuItem("Documentation"))
-				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/wiki");
+				App->OpenBrowser("https://github.com/albertec1/Summer-Engine/wiki");
 
 			if (ImGui::MenuItem("Download latest"))
-				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/releases");
+				App->OpenBrowser("https://github.com/albertec1/Summer-Engine/releases");
 
 			if (ImGui::MenuItem("Report a bug"))
-				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/issues");
+				App->OpenBrowser("https://github.com/albertec1/Summer-Engine/issues");
 			ImGui::EndMenu();
 		}
 		ImGui::EndMenuBar();
@@ -177,30 +175,28 @@ update_status ModuleMenu::Update(float dt)
 	}
 
 	//Window with a checkbox allowing to show the demo window of ImGui
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
+	if (showDemoWindow)
+		ImGui::ShowDemoWindow(&showDemoWindow);
 	{
 		ImGui::Begin("DEMO");
-		ImGui::Checkbox("Demo Window", &show_demo_window);
+		ImGui::Checkbox("Demo Window", &showDemoWindow);
 		ImGui::End();
 	}
 
-	//std::vector<Window*>::iterator item = winArray.begin();
+	std::vector<Window*>::iterator item = winArray.begin();
 
-	//for (item; item != winArray.end(); ++item)
-	//{
-	//	(*item)->Draw();
-	//}
-	//
-		
+	for (item; item != winArray.end(); ++item)
+	{
+		(*item)->Draw();
+	}
+			
 	return UPDATE_CONTINUE;
 }
 
-
-//void ModuleMenu::AddWindow(Window* window)
-//{
-//	winArray.push_back(window);
-//}
+void ModuleMenu::AddWindow(Window* window)
+{
+	winArray.push_back(window);
+}
 
 void ModuleMenu::Render()
 {
@@ -220,12 +216,12 @@ void ModuleMenu::Render()
 
 void ModuleMenu::LogFPS(float fps, float ms)
 {
-	/*if (configuration != nullptr)
-		configuration->AddLogFPS(fps, ms);*/
+	if (configuration != nullptr)
+		configuration->AddLogFPS(fps, ms);
 }
 
 void ModuleMenu::Log(const char* text)
 {
-	/*if (console != nullptr)
-		console->ConsoleLog(text);*/
+	if (console != nullptr)
+		console->ConsoleLog(text);
 }
