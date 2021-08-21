@@ -128,7 +128,6 @@ void WinConfiguration::Draw()
 					changeFPSlimit = true;
 					App->renderer3D->SetVSync(vsync);
 			}
-			
 		}
 		if (ImGui::CollapsingHeader("Input"))
 		{
@@ -195,8 +194,6 @@ void WinConfiguration::Draw()
 			ImGui::SameLine();
 			ImGui::TextColored(YELLOW, "%s", IMGUI_VERSION);		//change ImGui for Devil
 		}
-
-
-		ImGui::End();
 	}
+		ImGui::End();
 }

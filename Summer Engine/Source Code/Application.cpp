@@ -107,7 +107,7 @@ void Application::FinishUpdate()
 	{
 		SDL_Delay(miliseconds - last_ms);
 	}
-	//menu->LogFPS((float)last_fps, (float)last_ms);
+	menu->LogFPS((float)last_fps, (float)last_ms);
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

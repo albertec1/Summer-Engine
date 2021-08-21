@@ -152,7 +152,7 @@ bool ModuleRenderer3D::Init()
 	
 	// Modern OpenGL square  ////////////////////
 
-	float positions[] = {
+	float vertices[] = {
 		-0.5f, -0.5f,
 		 0.5f, -0.5f,
 		 0.5f,  0.5f,
@@ -160,23 +160,24 @@ bool ModuleRenderer3D::Init()
 		-0.5f,  0.5f,
 		//-0.5f, -0.5f //4TH VERTEX REPEATED
 	};
-
+	
 	uint indices[] = {
 		0, 1, 2,
-		2, 3, 0
+		2, 3, 0 
 	};
+
+	glBindVertexArray(VAO);	//stores calls to glGenBuffers when the target is GL_ELEMENT_ARRAY_BUFFER
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 2, positions, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &IBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-
-	uint ibo; //index buffer object
-	glGenBuffers(1, &ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 6, indices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -203,7 +204,8 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
-	////DIRECT MODE TRIANGLE EXAMPLE//
+	////DIRECT MODE TRIANGLE EXAMPLE//  //TODO: move into a separate method
+
 	//glLineWidth(2.0f);
 	//glBegin(GL_TRIANGLES);
 	//
@@ -221,7 +223,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
@@ -229,26 +230,16 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
 	SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	
-	//Render without indices///
-	/*glEnableClientState(GL_VERTEX_ARRAY);		
-	glVertexPointer(2, GL_FLOAT, 0, NULL);	
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	GLenum error = glGetError();
-	if (error != GL_NO_ERROR)
-	{
-		LOG("Error Drawimg Elements! %s\n", gluErrorString(error));
-	}
-	glDisableClientState(GL_VERTEX_ARRAY);*/
-
 	// Modern OpenGL square render////////////////////
 	// Render using indices///
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
 	{
 		LOG("Error Drawimg Elements! %s\n", gluErrorString(error));
 	}
-
+	glBindVertexArray(0);
 	//DrawAllMeshes();
 	
 	//ImGui Render
@@ -271,7 +262,6 @@ bool ModuleRenderer3D::CleanUp()
 
 	return true;
 }
-
 
 void ModuleRenderer3D::OnResize(int width, int height)
 {
@@ -413,6 +403,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 //	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->tex_width, tex->tex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 //	return tex;
 //}
+
 
 
 void ModuleRenderer3D::SetDepthBufferEnabled()

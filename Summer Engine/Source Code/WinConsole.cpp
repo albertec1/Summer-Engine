@@ -28,8 +28,8 @@ void WinConsole::Draw()
 			scrollToBottom = false;
 		}
 		
-		ImGui::End();
 	}
+		ImGui::End();
 }
 
 void WinConsole::CleanUp()

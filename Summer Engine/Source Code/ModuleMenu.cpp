@@ -189,7 +189,7 @@ update_status ModuleMenu::Update(float dt)
 	{
 		(*item)->Draw();
 	}
-			
+
 	return UPDATE_CONTINUE;
 }
 
