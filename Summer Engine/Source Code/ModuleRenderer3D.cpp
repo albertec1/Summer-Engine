@@ -153,17 +153,29 @@ bool ModuleRenderer3D::Init()
 	// Modern OpenGL square  ////////////////////
 
 	float vertices[] = {
-		-0.5f, -0.5f,
-		 0.5f, -0.5f,
-		 0.5f,  0.5f,
-		 //0.5f,  0.5f, //3RD VERTEX REPEATED
-		-0.5f,  0.5f,
-		//-0.5f, -0.5f //4TH VERTEX REPEATED
+		-0.5f, -0.5f, -0.5f,		//v0 
+		 0.5f, -0.5f, -0.5f,		//v1
+		 0.5f,  0.5f, -0.5f,		//v2
+		-0.5f,  0.5f, -0.5f,		//v3
+		 0.5f, -0.5f,  0.5f,		//v4
+		 0.5f,  0.5f,  0.5f,		//v5
+		-0.5f,  0.5f,  0.5f,		//v6
+		-0.5f, -0.5f,  0.5f,		//v7	
 	};
 	
 	uint indices[] = {
-		0, 1, 2,
-		2, 3, 0 
+		0, 2, 1,	//BACK FACE
+		0, 3, 2,	
+		1, 2, 4,	//RIGHT FACE
+		4, 2, 5,
+		2, 6, 5,	//TOP FACE
+		2, 3, 6,
+		1, 7, 0,	//BOTTOM FACE
+		1, 4, 7, 
+		6, 3, 0,	//LEFT FACE
+		7, 6, 0, 
+		4, 5, 7,	//FRONT FACE
+		5, 6, 7, 
 	};
 
 	glBindVertexArray(VAO);	//stores calls to glGenBuffers when the target is GL_ELEMENT_ARRAY_BUFFER
@@ -177,7 +189,7 @@ bool ModuleRenderer3D::Init()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -233,7 +245,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	// Modern OpenGL square render////////////////////
 	// Render using indices///
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
 	{
