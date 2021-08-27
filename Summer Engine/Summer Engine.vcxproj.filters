@@ -37,6 +37,9 @@
     <Filter Include="Containers\mmgr">
       <UniqueIdentifier>{a54a2e6b-6619-4e7e-8ed1-2f0108f687f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Code\Importers">
+      <UniqueIdentifier>{2c641ba8-c52d-4d5f-9261-98be5c413cd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -113,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\Dependencies\mmgr\mmgr.cpp">
       <Filter>Containers\mmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ImporterMesh.cpp">
+      <Filter>Source Code\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="Source Code\Dependencies\mmgr\nommgr.h">
       <Filter>Containers\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ImporterMesh.h">
+      <Filter>Source Code\Importers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

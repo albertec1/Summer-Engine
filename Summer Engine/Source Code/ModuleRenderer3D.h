@@ -25,8 +25,8 @@ public:
 
 	void OnResize(int width, int height);
 
-	/*MeshInfo* LoadModel(const std::string& filename);
-	TextureInfo* CreateCheckerImage() const;*/
+	/*MeshInfo* LoadModel(const std::string& filename);*/
+	void CreateCheckerImage() const;
 
 	void SetDepthBufferEnabled();
 	bool GetVSync() const;
@@ -47,6 +47,8 @@ public:
 	bool depthEnabled = true;
 	bool wireframeMode = false;
 	bool vsync = true;
+
+	void PrimitiveCube();
 
 private:
 

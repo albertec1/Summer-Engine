@@ -155,6 +155,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ImporterMesh.cpp" />
     <ClCompile Include="Source Code\Application.cpp" />
     <ClCompile Include="Source Code\Color.cpp" />
     <ClCompile Include="Source Code\Dependencies\ImGui\imgui.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="Source Code\WinConfigutation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ImporterMesh.h" />
     <ClInclude Include="Source Code\Application.h" />
     <ClInclude Include="Source Code\Color.h" />
     <ClInclude Include="Source Code\Dependencies\ImGui\imconfig.h" />
