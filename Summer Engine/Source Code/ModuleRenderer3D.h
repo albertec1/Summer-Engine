@@ -26,7 +26,7 @@ public:
 	void OnResize(int width, int height);
 
 	/*MeshInfo* LoadModel(const std::string& filename);*/
-	void CreateCheckerImage() const;
+	void CreateCheckerImage();
 
 	void SetDepthBufferEnabled();
 	bool GetVSync() const;
@@ -60,6 +60,8 @@ private:
 	uint VBO = 0;
 	uint IBO = 0;
 	uint VAO = 0;
+	uint TCoordsBuffer = 0;
+	uint TEX = 0;
 
  ////Testinng variables/////
 	//float *positions;

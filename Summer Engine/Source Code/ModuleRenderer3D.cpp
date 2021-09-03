@@ -155,20 +155,20 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
-	////DIRECT MODE TRIANGLE EXAMPLE//  //TODO: move into a separate method
-	//glLineWidth(2.0f);
-	//glBegin(GL_TRIANGLES);
-	//
-	//glTexCoord2f(0.0f, 0.f);		glVertex3f(-2.f, 1.f, 0.f);
-	//glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
-	//glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
-	//
-	//glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
-	//glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
-	//glTexCoord2f(1.f, 1.f);		glVertex3f(2.f, 4.f, 0.f);
-	//
-	//glEnd();
-	//glFlush();
+	//DIRECT MODE TRIANGLE EXAMPLE//  //TODO: move into a separate method
+	glLineWidth(2.0f);
+	glBegin(GL_TRIANGLES);
+	
+	glTexCoord2f(0.0f, 0.f);	glVertex3f(-2.f, 1.f, 0.f);
+	glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
+	glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
+	
+	glTexCoord2f(0.f, 1.f);		glVertex3f(-2.f, 4.f, 0.f);
+	glTexCoord2f(1.f, 0.f);		glVertex3f(2.f, 1.f, 0.f);
+	glTexCoord2f(1.f, 1.f);		glVertex3f(2.f, 4.f, 0.f);
+	
+	glEnd();
+	glFlush();
 	
 	return UPDATE_CONTINUE;
 }
@@ -182,8 +182,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	
 	// Modern OpenGL square render////////////////////
 	// Render using indices///
+	glBindTexture(GL_TEXTURE_2D, TEX);
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
 	{
@@ -321,16 +323,16 @@ void ModuleRenderer3D::OnResize(int width, int height)
 //	
 //}
 
-void ModuleRenderer3D::CreateCheckerImage() const
+void ModuleRenderer3D::CreateCheckerImage()
 {
 	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
 	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
 		for (int j = 0; j < CHECKERS_WIDTH; j++) {
 			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255; //debug this line to see what it does
-			checkerImage[i][j][0] = (GLubyte)c;
-			checkerImage[i][j][1] = (GLubyte)c;
-			checkerImage[i][j][2] = (GLubyte)c;
-			checkerImage[i][j][3] = (GLubyte)255;
+			checkerImage[i][j][0] = (GLubyte)c;		//R
+			checkerImage[i][j][1] = (GLubyte)c;		//G
+			checkerImage[i][j][2] = (GLubyte)c;		//B
+			checkerImage[i][j][3] = (GLubyte)255;	//A
 		}
 	}
 
@@ -340,10 +342,9 @@ void ModuleRenderer3D::CreateCheckerImage() const
 	tex->tex_height = CHECKERS_HEIGHT;*/
 
 	//Load Texture info and parameters
-	uint tex = 0;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
+	glGenTextures(1, &TEX);
+	glBindTexture(GL_TEXTURE_2D, TEX);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -352,25 +353,38 @@ void ModuleRenderer3D::CreateCheckerImage() const
 
 	//Send checkerImage to OpenGL
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void ModuleRenderer3D::PrimitiveCube()
 {
 	float vertices[] = {
-	//positions				//texture coords
-	-0.5f, -0.5f, -0.5f,	0.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,	1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
-	-0.5f,  0.5f, -0.5f,	1.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,			
-	 0.5f,  0.5f,  0.5f,			
-	-0.5f,  0.5f,  0.5f,			
-	-0.5f, -0.5f,  0.5f,			
+
+		/*-0.5f, -0.5f, -0.5f,	
+		 0.5f, -0.5f, -0.5f,	
+		 0.5f,  0.5f, -0.5f,	
+		-0.5f,  0.5f, -0.5f,	*/
+		 0.5f, -0.5f,  0.5f,	1.0f, 0.0f, //0
+		 0.5f,  0.5f,  0.5f,	1.0f, 1.0f,	//1	
+		-0.5f,  0.5f,  0.5f,	0.0f, 1.0f,	//2
+		-0.5f, -0.5f,  0.5f, 	0.0f, 0.0f  //3
 	};
 
+	//float texCoords[] = {
+	//	1.0f, 0.0f, //0
+	//	1.0f, 1.0f,	//1
+	//	0.0f, 0.0f, //3
+	//	
+	//	1.0f, 1.0f,	//1
+	//	0.0f, 1.0f,	//2
+	//	0.0f, 0.0f  //3
+	//};
+
 	uint indices[] = {
-		0, 2, 1,	//BACK FACE
-		0, 3, 2,
+		//0, 2, 1,	//BACK FACE
+		//0, 3, 2,
 		//1, 2, 4,	//RIGHT FACE
 		//4, 2, 5,
 		//2, 6, 5,	//TOP FACE
@@ -381,22 +395,32 @@ void ModuleRenderer3D::PrimitiveCube()
 		//7, 6, 0,
 		//4, 5, 7,	//FRONT FACE
 		//5, 6, 7,
+		0, 1, 3,
+		1, 2, 3,
 	};
 	
+	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);	//stores calls to glGenBuffers when the target is GL_ELEMENT_ARRAY_BUFFER
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);	
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+
+	/*glGenBuffers(1, &TCoordsBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, TCoordsBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);*/
+
 	glGenBuffers(1, &IBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	/*stackoverflow.com/questions/4983532/what-are-the-texture-coordinates-for-a-cube-in-opengl*/
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 }
 
 void ModuleRenderer3D::SetDepthBufferEnabled()
